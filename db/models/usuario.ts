@@ -20,6 +20,7 @@ export class Usuario extends Model{
     declare data_nasc: Date;
     declare telefone: string;
     declare tipo: number;
+    declare senha: string;
 
     static associate(): void { }
 
@@ -39,16 +40,16 @@ export function initUsuario(sequelize: Sequelize): void {
             autoIncrement: true
         },
         nome: {
-            type: DataTypes.STRING(150),
+            type: DataTypes.STRING,
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING(150),
+            type: DataTypes.STRING,
             allowNull: false,
             defaultValue: true,
         },
         cpf: {
-            type: DataTypes.STRING(13),
+            type: DataTypes.STRING,
             allowNull: false,
             defaultValue: true,
         },
@@ -62,12 +63,16 @@ export function initUsuario(sequelize: Sequelize): void {
             allowNull: true
         },
         telefone: {
-            type: DataTypes.STRING(13),
+            type: DataTypes.STRING,
             allowNull: false,
             defaultValue: true,
         },
         tipo: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        senha: {
+            type: DataTypes.STRING,
             allowNull: false
         }
 
