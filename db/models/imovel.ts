@@ -1,44 +1,41 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import { Endereco } from "./endereco"; // Importe o modelo Endereco
+import { Endereco } from "./endereco"; 
+import { TipoImovel } from "./tipoImovel";
 
 export class Imovel extends Model {
-  declare idimovel: number;
-  declare nome: string;
+  declare id: number;
+  declare titulo: string;
   declare descricao: string;
-  declare tipo: number;
   declare tamanho: number;
   declare qtd_banheiros: number;
   declare qtd_quartos: number;
   declare vagas: number;
-  declare mobilia: number;
   declare aluguel: number;
   declare condominio: number;
-  declare status: boolean;
+  declare ocupado: boolean;
+  declare ocupacao_max: number;
   declare endereco_id: number;
 
   static associate(): void {
     Imovel.belongsTo(Endereco, { foreignKey: "endereco_id" });
+    Imovel.belongsTo(TipoImovel, {foreignKey: "tipoimovel_id"});
   }
 }
 
 export function initImovel(sequelize: Sequelize): void {
   Imovel.init(
     {
-      idimovel: {
+      id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      nome: {
+      titulo: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       descricao: {
         type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      tipo: {
-        type: DataTypes.INTEGER,
         allowNull: false,
       },
       tamanho: {
@@ -57,10 +54,6 @@ export function initImovel(sequelize: Sequelize): void {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      mobilia: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       aluguel: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -69,23 +62,19 @@ export function initImovel(sequelize: Sequelize): void {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      status: {
+      ocupado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      endereco_id: {
+      ocupacao_max: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "endereco", // nome da tabela referenciada
-          key: "id", // chave primária da tabela referenciada
-        },
-      },
+      }
     },
     {
       sequelize,
       modelName: "Imovel",
-      tableName: "imovel",
+      tableName: "imoveis",
       timestamps: false,
     }
   );

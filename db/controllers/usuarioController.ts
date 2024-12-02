@@ -28,7 +28,7 @@ const usuarios = {
         try {
 
             const usuario = await UsuarioDb.findOne({
-                where: { idusuario: id }
+                where: { id: id }
             })
             if (!usuario) {
                 throw new Error('Usuário não encontrado.'); 
@@ -46,7 +46,7 @@ const usuarios = {
 
         try {
             if (data) {
-                const usuario = await Models.Usuario.create({
+                const usuario = await UsuarioDb.create({
                     nome: data.nome,
                     email: data.email,
                     cpf: data.cpf,

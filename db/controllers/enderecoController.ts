@@ -5,6 +5,8 @@ import { Imovel as ImovelDb } from "../models/imovel";
 const enderecos = {
   async list() {
     try {
+      console.log("Model Endereco:", EnderecoDb === undefined ? "Não inicializado" : "Inicializado");
+
       const enderecos = await EnderecoDb.findAll()
         .then((response: EnderecoDb[]) => {
           const data = response.map((record) => {
@@ -16,12 +18,14 @@ const enderecos = {
 
       if (enderecos) {
         return { list: enderecos };
+      }else{
+        throw new Error('Não foi possivel listar o endereco.'); 
       }
     } catch (error: any) {
       const newError = new Error(
         `Method: list; \n file: enderecoController.ts:: ${error}`
       );
-      console.log(newError.message, { critical: false, track: newError.stack });
+     console.log(newError.message, { critical: false, track: newError.stack });
       return { error: true, message: newError.message };
     }
   },
@@ -29,10 +33,10 @@ const enderecos = {
   async show(id: number) {
     try {
       const endereco = await EnderecoDb.findOne({
-        where: { idimovel: id },
+        where: { id: id },
       });
       if (!endereco) {
-        throw new Error("Imóvel não encontrado.");
+        throw new Error("Endereço não encontrado.");
       }
       return endereco;
     } catch (error: any) {
@@ -70,7 +74,7 @@ const enderecos = {
       if (endereco_id && data) {
         const endereco = await EnderecoDb.findOne({
           where: {
-            idendereco: endereco_id,
+            id: endereco_id,
           },
         });
         if (!endereco) {
@@ -92,10 +96,10 @@ const enderecos = {
       if (id) {
         const endereco = await EnderecoDb.findByPk(id);
         if (!endereco) {
-          throw new Error("Imóvel não encontrado.");
+          throw new Error("Endereço não encontrado.");
         }
         await endereco.destroy();
-        return { message: "Imóvel deletado com sucesso." };
+        return { message: "Endereço deletado com sucesso." };
       }
     } catch (error: any) {
       const newError = new Error(

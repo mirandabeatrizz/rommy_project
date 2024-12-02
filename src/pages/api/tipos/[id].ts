@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import usuarioDb from "../../../../db/controllers/usuarioController";
+import tipoImovel from "../../../../db/controllers/tipoImovelController";
 import db from '../../../../db/models';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -14,8 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case 'GET':
         try {
-          const usuario = await usuarioDb.show(userId)
-          return res.status(200).json(usuario)
+          const tipo_imovel = await tipoImovel.show(userId)
+          return res.status(200).json(tipo_imovel)
 
         } catch (error) {
           return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })
@@ -24,15 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
           let data = req.body
 
-          const usuario = await usuarioDb.update(userId, data)
-          return res.status(200).json(usuario)
+          const update_tipo = await tipoImovel.update(userId, data)
+          return res.status(200).json(update_tipo)
 
         } catch (error) {
           return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })
         }
       case 'DELETE':
         try {
-          const mensagem = await usuarioDb.delete(userId);
+          const mensagem = await tipoImovel.delete(userId);
           res.status(200).json(mensagem);
         } catch (error) {
           return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })

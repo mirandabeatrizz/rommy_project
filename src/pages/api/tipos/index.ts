@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import usuarioDb from "../../../../db/controllers/usuarioController";
+import tipoImovel from "../../../../db/controllers/tipoImovelController";
 import sequelize from 'sequelize';
 import db from '../../../../db/models';
 
@@ -10,16 +10,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case 'GET':
         try {
-          const usuarios = await usuarioDb.list();
-          res.status(200).json(usuarios);
+          const tipos_imovel = await tipoImovel.list();
+          res.status(200).json(tipos_imovel);
         } catch (error) {
           return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })
         }
       case 'POST':
         try {
           let data = req.body;
-          const new_user = await usuarioDb.create(data);
-          return res.status(200).json(new_user)
+          const new_tipo = await tipoImovel.create(data);
+          return res.status(200).json(new_tipo)
 
         } catch (error) {
           return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })

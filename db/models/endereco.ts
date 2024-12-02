@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { Imovel } from "./imovel";
 
 export class Endereco extends Model {
-  declare idendereco: number;
+  declare id: number;
   declare rua: string;
   declare bairro: string;
   declare cidade: string;
@@ -10,8 +10,10 @@ export class Endereco extends Model {
   declare cep: string;
 
   static associate(): void {
+    console.log("Associando modelo Endereco.");
     Endereco.hasMany(Imovel, { foreignKey: "imovel_id" });
-  }
+}
+
 }
 
 export function initEndereco(sequelize: Sequelize): void {

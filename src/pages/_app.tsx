@@ -1,12 +1,11 @@
-import sequelize from '../../db/config/config';
+import type { AppProps } from "next/app";
+import { ensureDbConnection } from "../../middlewares/ensureDbConnection";
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Conexão com o banco de dados estabelecida.');
-    await sequelize.sync(); // Opcional: Sincronizar modelos com o banco
-  } catch (error) {
-    console.error('Erro ao conectar ao banco:', error);
-  }
-})();
+export default function MyApp({ Component, pageProps }: AppProps) {
+  // Testa a conexão com o banco ao iniciar o app
+  ensureDbConnection()
+    .then(() => console.log("Banco conectado com sucesso."))
+    .catch((error: any) => console.error("Erro ao conectar ao banco:", error));
 
+  return <Component {...pageProps} />;
+}

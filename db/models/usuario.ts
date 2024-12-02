@@ -34,7 +34,7 @@ export class Usuario extends Model{
 export function initUsuario(sequelize: Sequelize): void {
 
     Usuario.init({
-        idusuario: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -62,14 +62,10 @@ export function initUsuario(sequelize: Sequelize): void {
             type: DataTypes.TEXT,
             allowNull: true
         },
-        telefone: {
+        celular: {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: true,
-        },
-        tipo: {
-            type: DataTypes.STRING,
-            allowNull: false
         },
         senha: {
             type: DataTypes.STRING,
@@ -79,7 +75,7 @@ export function initUsuario(sequelize: Sequelize): void {
     }, {
         sequelize,
         modelName: 'Usuario',
-        tableName: 'usuario',
+        tableName: 'usuarios',
     })
 }
 

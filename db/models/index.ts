@@ -5,11 +5,13 @@ import sequelize from "../config/config";
 import { Usuario, initUsuario } from "./usuario";
 import { Imovel, initImovel } from "./imovel";
 import { Endereco, initEndereco } from "./endereco";
+import { TipoImovel, initTipoImovel } from "./tipoImovel";
 
 const db: any = {
   Usuario,
   Imovel,
   Endereco,
+  TipoImovel,
   sequelize,
   Sequelize,
 };
@@ -23,17 +25,50 @@ const db: any = {
   }
 })();
 
+
+async function initializeDatabase() {
+  try {
+    // Testar a conexão com o banco de dados
+    await sequelize.authenticate();
+    console.log("Conexão com o banco de dados ativa.");
+
+    // Inicializar os models
+    initUsuario(sequelize);
+    initImovel(sequelize);
+    initEndereco(sequelize);
+    initTipoImovel(sequelize);
+
+    // Associar os models
+    (Object.keys(db) as (keyof typeof db)[]).forEach((modelName) => {
+      if (modelName !== 'sequelize' && modelName !== 'Sequelize') {
+        db[modelName].associate();
+      }
+    });
+
+    console.log("Modelos inicializados com sucesso.");
+
+  } catch (error) {
+    console.error("Erro ao conectar e inicializar os modelos:", error);
+  }
+}
+
+// Chamando a função de inicialização do banco de dados
+initializeDatabase();
+
 try {
+  console.log("Inicializando modelos...");
   initUsuario(sequelize);
   initImovel(sequelize);
   initEndereco(sequelize);
-
-  // (Object.keys(db) as (keyof typeof db)[]).forEach((modelName) => {
-  //     if (modelName !== 'sequelize' && modelName !== 'Sequelize') {
-  //         db[modelName].associate();
-  //     }
-
-  // });
+  initTipoImovel(sequelize);
+  
+  console.log("Chamando associações...");
+  Object.keys(db).forEach((modelName) => {
+      if (modelName !== "sequelize" && modelName !== "Sequelize") {
+          db[modelName].associate?.();
+      }
+  });
+  
 } catch (error) {
   const newError = new Error(
     `Method: Sequelize initModels & associate \n ; file: models/index.ts:: ${error} `
@@ -43,7 +78,3 @@ try {
 }
 
 export default db;
-
-/*
-
-*/
