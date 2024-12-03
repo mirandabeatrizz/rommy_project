@@ -1,11 +1,12 @@
-import type { AppProps } from "next/app";
-import { ensureDbConnection } from "../../middlewares/ensureDbConnection";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  // Testa a conexão com o banco ao iniciar o app
-  ensureDbConnection()
-    .then(() => console.log("Banco conectado com sucesso."))
-    .catch((error: any) => console.error("Erro ao conectar ao banco:", error));
-
-  return <Component {...pageProps} />;
+export default function App() {
+    return (
+        <a
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Read our docs
+        </a>
+    )
 }

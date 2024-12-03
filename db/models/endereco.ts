@@ -10,8 +10,8 @@ export class Endereco extends Model {
   declare cep: string;
 
   static associate(): void {
-    console.log("Associando modelo Endereco.");
-    Endereco.hasMany(Imovel, { foreignKey: "imovel_id" });
+    console.log("associando modelo endereco")
+    Endereco.hasMany(Imovel);
 }
 
 }

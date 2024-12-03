@@ -6,23 +6,32 @@ import {
     Association,
     NonAttribute,
 } from "sequelize";
+import { Imovel } from "./imovel";
+import { UsuarioImovel } from "./usuarioImovel";
+import { ContratoUsuario } from "./contratoUsuario";
+import { Contrato } from "./contrato";
 
 /**
  * Classe que representa o model de Config e suas associações
  */
 export class Usuario extends Model{
 
-    declare idusuario: number;
+    declare id: number;
     declare nome: string;
     declare email: string
     declare cpf: string;
     declare genero: number;
     declare data_nasc: Date;
-    declare telefone: string;
-    declare tipo: number;
+    declare celular: string;
     declare senha: string;
 
-    static associate(): void { }
+    declare usuario_imoveis?: NonAttribute<UsuarioImovel>
+
+    static associate(): void {
+        console.log("associando modelo usuario")
+        Usuario.belongsToMany(Imovel, {through: UsuarioImovel, foreignKey: 'usuario_id', as: 'usuario_imoveis'});
+       Usuario.belongsToMany(Contrato, {through: ContratoUsuario, foreignKey: 'usuario_id'})
+     }
 
 }
 

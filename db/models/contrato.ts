@@ -7,6 +7,9 @@ import {
     NonAttribute,
 } from "sequelize";
 import { Imovel } from "./imovel";
+import { Relacao } from "./relacao";
+import { Usuario } from "./usuario";
+import { ContratoUsuario } from "./contratoUsuario";
 
 /**
  * Classe que representa o model de Config e suas associações
@@ -14,14 +17,18 @@ import { Imovel } from "./imovel";
 export class Contrato extends Model {
 
     declare id: number;
-    declare data_inicio: string;
-    declare data_fim: string;
+    declare data_inicio: Date;
+    declare data_fim: Date;
     declare valor: number;
     declare ativo: boolean;
     declare observacao: string;
 
 
-    static associate(): void {}
+    static associate(): void {
+        console.log("associando modelo contrato")
+        Contrato.belongsToMany(Usuario, { through: ContratoUsuario});
+      
+    }
 
 }
 

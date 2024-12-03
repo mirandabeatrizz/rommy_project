@@ -7,7 +7,9 @@ const enderecos = {
     try {
       console.log("Model Endereco:", EnderecoDb === undefined ? "Não inicializado" : "Inicializado");
 
-      const enderecos = await EnderecoDb.findAll()
+      const enderecos = await EnderecoDb.findAll({
+        attributes: ['rua', 'bairro', 'cidade', 'estado', 'cep']
+      })
         .then((response: EnderecoDb[]) => {
           const data = response.map((record) => {
             return record.toJSON();

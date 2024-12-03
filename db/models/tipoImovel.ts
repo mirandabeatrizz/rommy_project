@@ -11,15 +11,16 @@ import { Imovel } from "./imovel";
 /**
  * Classe que representa o model de Config e suas associações
  */
-export class TipoImovel extends Model{
+export class TipoImovel extends Model {
 
     declare id: number;
     declare nome: string;
-   
+
 
     static associate(): void {
-        TipoImovel.hasMany(Imovel, { foreignKey: "imovel_id" });
-     }
+        console.log("associando modelo tipo_imovel")
+        TipoImovel.hasMany(Imovel);
+    }
 
 }
 

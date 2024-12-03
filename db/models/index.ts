@@ -6,12 +6,20 @@ import { Usuario, initUsuario } from "./usuario";
 import { Imovel, initImovel } from "./imovel";
 import { Endereco, initEndereco } from "./endereco";
 import { TipoImovel, initTipoImovel } from "./tipoImovel";
+import { Relacao, initRelacao } from "./relacao";
+import { Interesse, initInteresse } from "./interesse";
+import { ContratoUsuario, initContratoUsuario } from "./contratoUsuario";
+import { Contrato, initContrato} from "./contrato";
 
 const db: any = {
   Usuario,
   Imovel,
   Endereco,
   TipoImovel,
+  Relacao,
+  Interesse,
+  ContratoUsuario,
+  Contrato,
   sequelize,
   Sequelize,
 };
@@ -35,15 +43,19 @@ async function initializeDatabase() {
     // Inicializar os models
     initUsuario(sequelize);
     initImovel(sequelize);
-    initEndereco(sequelize);
     initTipoImovel(sequelize);
+    initRelacao(sequelize);
+    initInteresse(sequelize);
+    initEndereco(sequelize);
+    initContrato(sequelize);
+    initContratoUsuario(sequelize);
 
     // Associar os models
-    (Object.keys(db) as (keyof typeof db)[]).forEach((modelName) => {
+   /* (Object.keys(db) as (keyof typeof db)[]).forEach((modelName) => {
       if (modelName !== 'sequelize' && modelName !== 'Sequelize') {
         db[modelName].associate();
       }
-    });
+    });*/
 
     console.log("Modelos inicializados com sucesso.");
 
@@ -55,26 +67,28 @@ async function initializeDatabase() {
 // Chamando a função de inicialização do banco de dados
 initializeDatabase();
 
-try {
-  console.log("Inicializando modelos...");
-  initUsuario(sequelize);
-  initImovel(sequelize);
-  initEndereco(sequelize);
-  initTipoImovel(sequelize);
+// try {
+//   console.log("Inicializando modelos...");
+//   initUsuario(sequelize);
+//   initImovel(sequelize);
+//   initEndereco(sequelize);
+//   initTipoImovel(sequelize);
+//   initRelacao(sequelize);
+//   initInteresse(sequelize);
   
-  console.log("Chamando associações...");
-  Object.keys(db).forEach((modelName) => {
-      if (modelName !== "sequelize" && modelName !== "Sequelize") {
-          db[modelName].associate?.();
-      }
-  });
+//   console.log("Chamando associações...");
+//   Object.keys(db).forEach((modelName) => {
+//       if (modelName !== "sequelize" && modelName !== "Sequelize") {
+//           db[modelName].associate?.();
+//       }
+//   });
   
-} catch (error) {
-  const newError = new Error(
-    `Method: Sequelize initModels & associate \n ; file: models/index.ts:: ${error} `
-  );
+// } catch (error) {
+//   const newError = new Error(
+//     `Method: Sequelize initModels & associate \n ; file: models/index.ts:: ${error} `
+//   );
 
-  console.log(newError.message, { critical: true, track: newError.stack });
-}
+//   console.log(newError.message, { critical: true, track: newError.stack });
+// }
 
 export default db;

@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
-import { randomUUID } from "crypto";
 
 dotenv.config({
   path: "../../",

@@ -1,6 +1,8 @@
 import Models from "../models/index";
 import { Endereco as EnderecoDb } from "../models/endereco";
 import { Imovel as ImovelDb } from "../models/imovel";
+import { Usuario as UsuarioDb } from "../models/usuario";
+import { UsuarioImovel as UsuarioImovelDb } from "../models/usuarioImovel";
 
 const imoveis = {
   async list() {
@@ -48,21 +50,43 @@ const imoveis = {
 
   async create(data: ImovelDb) {
     try {
+
       if (data) {
-        const imovel = await ImovelDb.create({
-          titulo: data.titulo,
-          descricao: data.descricao,
-          tamanho: data.tamanho,
-          qtd_banheiros: data.qtd_banheiros,
-          qtd_quartos: data.qtd_quartos,
-          vagas: data.vagas,
-          aluguel: data.aluguel,
-          condominio: data.condominio,
-          ocupado: data.ocupado,
-          ocupacao_max: data.ocupacao_max,
-          endereco_id: data.endereco_id
-        });
-        return imovel;
+
+        const { usuario_id, titulo, descricao, tamanho, qtd_banheiros, qtd_quartos, vagas, aluguel, condominio, ocupado, ocupacao_max, endereco_id } = data;
+
+        // busca as informações do usuário para criar o vinculo com o imóvel
+        const usuario = await UsuarioDb.findOne({
+          where: { id: usuario_id }
+        })
+
+        if (usuario) {
+          // se encontrou o usuário então cria o imovel
+          const imovel = await ImovelDb.create({
+            titulo: titulo,
+            descricao: descricao,
+            tamanho: tamanho,
+            qtd_banheiros: qtd_banheiros,
+            qtd_quartos: qtd_quartos,
+            vagas: vagas,
+            aluguel: aluguel,
+            condominio: condominio,
+            ocupado: ocupado,
+            ocupacao_max: ocupacao_max,
+            endereco_id: endereco_id
+          }).then(async (imovel)=>{
+            // após criar as informações do imóvel associa ele com o usuário
+            await UsuarioImovelDb.create({
+              usuario_id: usuario.id,
+              imovel_id: imovel.id,
+              relacao_id: 1 //id da relação de proprietario
+            })
+          })
+
+          return imovel;
+        }
+        throw new Error("Usuário não encontrado.");
+        
       }
     } catch (error: any) {
       const newError = new Error(
@@ -72,6 +96,7 @@ const imoveis = {
       return { error: true, status: 500, message: newError.message };
     }
   },
+
   async update(imovel_id: number, data: ImovelDb) {
     try {
       if (imovel_id && data) {

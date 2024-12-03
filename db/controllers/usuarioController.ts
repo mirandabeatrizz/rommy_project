@@ -7,7 +7,9 @@ const usuarios = {
 
     async list() {
         try {
-            const usuarios = await UsuarioDb.findAll().then((response: UsuarioDb[]) => {
+            const usuarios = await UsuarioDb.findAll({
+                attributes: ['nome', 'email', 'cpf', 'genero', 'data_nasc', 'celular', 'senha']
+              }).then((response: UsuarioDb[]) => {
                 const data = response.map((record) => {
                     return record.toJSON()
                 })
@@ -50,10 +52,9 @@ const usuarios = {
                     nome: data.nome,
                     email: data.email,
                     cpf: data.cpf,
-                    telefone: data.telefone,
+                    celular: data.celular,
                     data_nasc: data.data_nasc,
                     genero: data.genero,
-                    tipo: data.tipo,
                     senha: data.senha
                 });
                 return usuario
@@ -71,7 +72,7 @@ const usuarios = {
             if (usuario_id && data) {
                 const usuario = await UsuarioDb.findOne({
                     where: {
-                        idusuario: usuario_id
+                        id: usuario_id
                     }
                 });
                 if (!usuario) {

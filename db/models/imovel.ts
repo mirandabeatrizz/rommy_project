@@ -1,6 +1,8 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { Sequelize, DataTypes, Model, NonAttribute, ForeignKey } from "sequelize";
 import { Endereco } from "./endereco"; 
 import { TipoImovel } from "./tipoImovel";
+import { Usuario } from "./usuario";
+import { UsuarioImovel } from "./usuarioImovel";
 
 export class Imovel extends Model {
   declare id: number;
@@ -14,11 +16,17 @@ export class Imovel extends Model {
   declare condominio: number;
   declare ocupado: boolean;
   declare ocupacao_max: number;
-  declare endereco_id: number;
+  declare endereco_id: ForeignKey<Endereco['id']>;
+  declare tipoimovel_id: ForeignKey<TipoImovel['id']>;
+
+  declare usuario_id:  NonAttribute <Usuario>
 
   static associate(): void {
-    Imovel.belongsTo(Endereco, { foreignKey: "endereco_id" });
-    Imovel.belongsTo(TipoImovel, {foreignKey: "tipoimovel_id"});
+    console.log("associando modelo imovel")
+    Imovel.belongsToMany(Usuario, {through: Usuario});
+    Imovel.belongsTo(Endereco);
+    Imovel.belongsTo(TipoImovel);
+  
   }
 }
 

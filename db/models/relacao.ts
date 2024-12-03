@@ -6,15 +6,24 @@ import {
     Association,
     NonAttribute,
 } from "sequelize";
+import { Imovel } from "./imovel";
+import { Contrato } from "./contrato";
+import { UsuarioImovel } from "./usuarioImovel";
+import { ContratoUsuario } from "./contratoUsuario"
 
 /**
  * Classe que representa o model de Config e suas associações
  */
-export class Relacao extends Model{
+export class Relacao extends Model {
 
     declare id: number;
     declare nome: string;
 
+    static associate(): void {
+        console.log("associando modelo relacao")
+        Relacao.hasMany(UsuarioImovel, { as: 'relacoes' })
+        Relacao.hasMany(ContratoUsuario, {as: 'contratos'});
+    }
 }
 
 /**
