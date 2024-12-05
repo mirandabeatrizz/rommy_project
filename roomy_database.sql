@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/11/2024 às 02:52
+-- Tempo de geração: 01/12/2024 às 21:56
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -48,15 +48,17 @@ CREATE TABLE `endereco` (
   `bairro` varchar(255) DEFAULT NULL,
   `cidade` varchar(255) DEFAULT NULL,
   `estado` varchar(255) DEFAULT NULL,
-  `cep` varchar(20) DEFAULT NULL
+  `cep` varchar(20) DEFAULT NULL,
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `endereco`
 --
 
-INSERT INTO `endereco` (`id`, `rua`, `bairro`, `cidade`, `estado`, `cep`) VALUES
-(1, 'Fernando Machado', 'Centro', 'Chapecó', 'Santa Catarina', '89800-000');
+INSERT INTO `endereco` (`id`, `rua`, `bairro`, `cidade`, `estado`, `cep`, `updatedAt`, `createdAt`) VALUES
+(1, 'Fernando Machado', 'Centro', 'Chapecó', 'Santa Catarina', '89800-000', '2024-12-01 19:45:08', '2024-12-01 19:45:23');
 
 -- --------------------------------------------------------
 
@@ -161,8 +163,18 @@ CREATE TABLE `usuarios` (
   `genero` int(10) UNSIGNED DEFAULT NULL,
   `estudante` tinyint(1) DEFAULT NULL,
   `matricula` varchar(20) DEFAULT NULL,
-  `instituicao` varchar(50) DEFAULT NULL
+  `instituicao` varchar(50) DEFAULT NULL,
+  `cpf` varchar(15) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nome`, `data_nasc`, `email`, `senha`, `celular`, `genero`, `estudante`, `matricula`, `instituicao`, `cpf`, `createdAt`, `updatedAt`) VALUES
+(1, 'beatriz', '0000-00-00', 'beatriz@gmail.com', '123456', '1', 0, NULL, NULL, NULL, '111.567.879-55', '2024-12-01 19:41:58', '2024-12-01 19:41:58');
 
 -- --------------------------------------------------------
 
@@ -307,7 +319,7 @@ ALTER TABLE `tipoimovel`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas
