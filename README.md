@@ -13,7 +13,7 @@ sistema web com a finalidade de conectar estes estudantes para que possam encont
 
    ```bash
    git clone https://github.com/mirandabeatrizz/rommy_project.git
-   cd roomy_project
+   cd rommy_project
    ```
 
 2. **Instale as dependências:**
