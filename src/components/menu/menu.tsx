@@ -2,7 +2,7 @@ import image from "../../../public/images/logo.svg";
 
 export default function Menu() {
   return (
-    <div className="w-full h-5 flex fixed h-[12%] justify-between items-center p-2">
+    <div className="w-full flex fixed h-[12%] justify-between items-center p-2">
       <div>
         <img className="h-[80px]" src={image.src}></img>
       </div>

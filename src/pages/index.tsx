@@ -1,7 +1,8 @@
 import searchIcon from "../../public/images/searchIcon.svg";
 import BackgroudImage from "@/components/bgImage";
 import Menu from "@/components/menu/menu";
-import SelectHome from "@/components/selectHome";
+import SelectHome from "@/components/selectButton";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,9 +16,9 @@ export default function Home() {
           <SelectHome />
         </div>
         <div className="bg-white w-full flex rounded-xl gap-4 p-2">
-          <button>
+          <Link href="/list">
             <img src={searchIcon.src} alt="searchIcon" />
-          </button>
+          </Link>
           <input
             type="text"
             className="bg-white w-full rounded-xl outline-none text-black"
