@@ -4,6 +4,7 @@ import {
     Model, DataTypes,
     Sequelize,
     ForeignKey,
+    NonAttribute,
 } from "sequelize";
 import { Imovel } from "./imovel";
 import { Usuario } from "./usuario";
@@ -13,10 +14,12 @@ import { Usuario } from "./usuario";
 export class Interesse extends Model {
 
     declare id: number;
-    declare data_cricao: Date;
+    declare data_criacao: Date;
     declare valor: number;
     declare qtd_moradores: number;
     declare usuario_id: ForeignKey<Usuario['id']>;
+
+    declare imovel_id?: NonAttribute<Imovel>
 
     static associate(): void {
 
@@ -39,7 +42,7 @@ export function initInteresse(sequelize: Sequelize): void {
             primaryKey: true,
             autoIncrement: true
         },
-        data_cricao: {
+        data_criacao: {
             type: DataTypes.DATE,
             allowNull: false,
         },
