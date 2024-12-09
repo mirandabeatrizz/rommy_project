@@ -7,9 +7,11 @@ import { GetServerSideProps } from "next";
 
 interface HomeProps {
   tiposDeImoveis: string[];
+  cidades: string[];
+  bairros: string[];
 }
 
-export default function Home({ tiposDeImoveis }: HomeProps) {
+export default function Home({ tiposDeImoveis, cidades, bairros }: HomeProps) {
   return (
     <div className="h-screen w-screen flex justify-center">
       <BackgroudImage />
@@ -19,12 +21,12 @@ export default function Home({ tiposDeImoveis }: HomeProps) {
           <SelectHome
             defaultValue={""}
             firstoption={"Cidade"}
-            options={["Chapecó", "Florianópolis", "Palhoça"]}
+            options={Array.isArray(cidades) ? cidades : []}
           />
           <SelectHome
             defaultValue={""}
-            firstoption={"Valor"}
-            options={["R$1000", "R$2000", "R$3000"]}
+            firstoption={"Bairro"}
+            options={Array.isArray(bairros) ? bairros : []}
           />
           <SelectHome
             defaultValue={""}
@@ -48,31 +50,41 @@ export default function Home({ tiposDeImoveis }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/tipos");
-    const data = await response.json();
+    // Consultando endereços
+    const responseEnderecos = await fetch(
+      "http://localhost:3000/api/enderecos"
+    );
+    const dataEnderecos = await responseEnderecos.json();
 
-    if (data && Array.isArray(data.list)) {
-      const tiposDeImoveis = data.list.map(
-        (item: { nome: string }) => item.nome
-      );
+    //filtrando cidades
+    const cidades = dataEnderecos.list.map(
+      (item: { cidade: string }) => item.cidade
+    );
+    const bairros = dataEnderecos.list.map(
+      (item: { bairro: string }) => item.bairro
+    );
 
-      return {
-        props: {
-          tiposDeImoveis,
-        },
-      };
-    } else {
-      console.error("data.list não é um array ou está ausente.");
-      return {
-        props: {
-          tiposDeImoveis: [],
-        },
-      };
-    }
-  } catch (error) {
-    console.error("Erro ao buscar os tipos de imóveis:", error);
+    // Consultando os tipos de imóveis
+    const responseTipos = await fetch("http://localhost:3000/api/tipos");
+    const dataTipos = await responseTipos.json();
+
+    const tiposDeImoveis = dataTipos.list.map(
+      (item: { nome: string }) => item.nome
+    );
+
     return {
       props: {
+        cidades,
+        bairros,
+        tiposDeImoveis,
+      },
+    };
+  } catch (error) {
+    console.error("Erro ao buscar os dados:", error);
+    return {
+      props: {
+        cidades: [],
+        bairros: [],
         tiposDeImoveis: [],
       },
     };
