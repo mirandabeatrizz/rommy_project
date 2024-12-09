@@ -10,6 +10,7 @@ import { Relacao, initRelacao } from "./relacao";
 import { Interesse, initInteresse } from "./interesse";
 import { ContratoUsuario, initContratoUsuario } from "./contratoUsuario";
 import { Contrato, initContrato} from "./contrato";
+import { initInteresseImovel, InteresseImovel } from "./interesseImovel";
 
 const db: any = {
   Usuario,
@@ -18,6 +19,7 @@ const db: any = {
   TipoImovel,
   Relacao,
   Interesse,
+  InteresseImovel,
   ContratoUsuario,
   Contrato,
   sequelize,
@@ -46,6 +48,7 @@ async function initializeDatabase() {
     initTipoImovel(sequelize);
     initRelacao(sequelize);
     initInteresse(sequelize);
+    initInteresseImovel(sequelize);
     initEndereco(sequelize);
     initContrato(sequelize);
     initContratoUsuario(sequelize);
