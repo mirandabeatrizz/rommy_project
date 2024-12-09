@@ -8,7 +8,7 @@ export default function Card() {
       </div>
       <div className="w-full flex justify-between items-center">
         <p className="italic">R$1.000,00</p>
-        <button className="bg-[#0A2E4D] rounded-md text-xl w-8 h-8 font-semibold text-white flex justify-center items-center">
+        <button className="bg-[#0A2E4D] rounded-md text-xl w-8 h-8 font-semibold text-white flex justify-center items-center hover:bg-[#1c65a4] transition duration-300">
           +
         </button>
       </div>

@@ -2,6 +2,7 @@ import image from "../../../public/images/logo.svg";
 import Card from "@/components/card";
 import SelectHome from "@/components/selectButton";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
 
 export default function List() {
   return (
@@ -16,17 +17,29 @@ export default function List() {
       </div>
       <form className="flex w-1/2 flex-col gap-14 items-center">
         <div className="w-full flex justify-between">
-          <SelectHome />
-          <SelectHome />
-          <SelectHome />
+          <SelectHome
+            defaultValue={""}
+            firstoption={"Cidade"}
+            options={["Chapecó", "Florianópolis", "Palhoça"]}
+          />
+          <SelectHome
+            defaultValue={""}
+            firstoption={"Valor"}
+            options={["R$1000", "R$2000", "R$3000"]}
+          />
+          <SelectHome
+            defaultValue={""}
+            firstoption={"Tipo"}
+            options={["Casa", "Apartamento", "Terreno"]}
+          />
         </div>
         <div className="text-black flex w-9/12 items-center">
           <p className="  font-semibold mr-8">Ordenar por: </p>
           <div className="flex gap-5">
-            <button className="bg-[#ecececf1] rounded-2xl p-2.5">
+            <button className="bg-[#ecececf1] rounded-2xl p-2.5 hover:bg-[#bcbcbcfd] hover:text-white hover:text-semibold transition duration-300">
               Menor preço
             </button>
-            <button className="bg-[#ecececf1] rounded-2xl p-2.5">
+            <button className="bg-[#ecececf1] rounded-2xl p-2.5 hover:bg-[#bcbcbcfd] hover:text-white hover:text-semibold transition duration-300">
               Maior preço
             </button>
           </div>
