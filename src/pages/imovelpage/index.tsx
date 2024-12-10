@@ -1,44 +1,37 @@
 import Menu from "@/components/menu/menu";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function ImovelPage() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const images = [
-    "https://via.placeholder.com/600x400.png?text=Imagem+1",
-    "https://via.placeholder.com/600x400.png?text=Imagem+2",
-    "https://via.placeholder.com/600x400.png?text=Imagem+3",
-  ];
+  // const images = [
+  //   "https://via.placeholder.com/600x400.png?text=Imagem+1",
+  //   "https://via.placeholder.com/600x400.png?text=Imagem+2",
+  //   "https://via.placeholder.com/600x400.png?text=Imagem+3",
+  // ];
 
-  const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  // const goToNextImage = () => {
+  //   setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  // };
 
-  const goToPreviousImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  // const goToPreviousImage = () => {
+  //   setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  // };
 
   return (
-    <div className="w-screen bg-[#f4f4f4]">
+    <div className="w-screen bg-white min-h-[100vh]">
       <div className="imovel-page-container">
-        {/* Menu */}
         <Menu />
-
-        {/* Conteúdo principal */}
-        <div className="flex flex-col items-center justify-center h-[90%] p-4">
-          {/* Título ajustado para ficar menor e mais abaixo */}
-          <h1 className="text-[#1f4d78] font-bold text-2xl mb-6 mt-2">Detalhes do Imóvel</h1>
+        <div className="flex flex-col items-center justify-center p-4">
+          <h1 className="text-[#0A2E4D] font-bold text-2xl mb-6 mt-[2vh]">Detalhes do Imóvel</h1>
           
-          {/* Carrossel com botões */}
-          <div className="w-full md:w-[60%] h-[300px] bg-gray-200 rounded-lg overflow-hidden relative mb-6">
-            {/* Imagem atual */}
+          {/* <div className="w-full md:w-[60%] h-[300px] bg-gray-200 rounded-lg overflow-hidden relative mb-6">
             <img
               src={images[currentImageIndex]}
               alt="Carrossel"
               className="h-full w-full object-cover transition-all duration-500"
             />
             
-            {/* Botões de navegação */}
             <button
               onClick={goToPreviousImage}
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition"
@@ -52,10 +45,10 @@ export default function ImovelPage() {
             >
               Próximo
             </button>
-          </div>
+          </div> */}
 
           {/* Informações do imóvel */}
-          <div className="w-full md:w-[60%] bg-white p-6 rounded-lg shadow-lg mb-6">
+          <div className="w-full md:w-[60%] bg-white p-6 rounded-lg shadow-lg mb-6 border-[1px]">
             <h2 className="text-lg font-semibold mb-2">Apartamento 2 quartos</h2>
             <p className="text-sm text-gray-700 mb-4">Localizado no bairro Jardim Américo, perto de supermercados, escolas e posto de saúde!</p>
 
