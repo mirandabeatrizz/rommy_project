@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Estilando com escopo restrito */
+.imovel-page-container {
+    --cor-primaria: #eb6d6d;
+    --cor-secundaria: #0e3a54;
+    --cor-fundo: #f4f4f4;
+    --cor-perigo: #eb6d6d;
+  }
+  

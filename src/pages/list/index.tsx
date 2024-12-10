@@ -12,7 +12,7 @@ interface ListProps {
 
 export default function List({ tiposDeImoveis, cidades, bairros }: ListProps) {
   return (
-    <div className="bg-white h-screen w-screen flex flex-col items-center gap-10">
+    <div className="bg-white w-screen flex flex-col items-center gap-10">
       <div className="flex items-center mt-3">
         <Link href={"../"}>
           <img className="h-[60px]" src={image.src} />
@@ -52,6 +52,10 @@ export default function List({ tiposDeImoveis, cidades, bairros }: ListProps) {
         </div>
       </form>
       <div className="grid grid-cols-4 w-1/2 gap-5">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
         <Card />
         <Card />
         <Card />

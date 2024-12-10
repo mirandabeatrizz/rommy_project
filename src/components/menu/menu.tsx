@@ -21,8 +21,11 @@ export default function Menu() {
           <>
             <Link href="./auth">Entrar</Link>
           </>
+          
         )}
       </div>
+      
     </div>
+    
   );
 }

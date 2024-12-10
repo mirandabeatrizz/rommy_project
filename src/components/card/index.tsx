@@ -1,6 +1,6 @@
 export default function Card() {
   return (
-    <div className="bg-[#fbfbfbcc] flex flex-col w-full rounded-xl p-2.5 gap-2 shadow-xl text-black border-[1px]">
+    <div className="bg-[#fbfbfbcc] flex flex-col w-full rounded-xl p-2.5 gap-2 shadow-xl text-black border-[1px] md:shrink-0">
       <p className="text-[#0A2E4D] font-semibold">Titulo aqui do imovel</p>
       <div className="text-xs">
         <p>Bairro</p>
