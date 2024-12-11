@@ -59,6 +59,8 @@ export default function List({
       <div className="grid grid-cols-4 w-[70%] gap-5">
         {dataImoveis.map((data) => (
           <Card
+            key={data.id}
+            id={data.id}
             titulo={data.titulo}
             cidade={cidades[data.endereco_id - 1]}
             bairro={bairros[data.endereco_id - 1]}
@@ -96,15 +98,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
     );
 
     const responseImoveis = await fetch("http://localhost:3000/api/imoveis");
-    let dataImoveis = await responseImoveis.json();
-    dataImoveis = dataImoveis.list;
+    const dataImoveis = await responseImoveis.json();
 
     return {
       props: {
         cidades,
         bairros,
         tiposDeImoveis,
-        dataImoveis,
+        dataImoveis: dataImoveis.list,
       },
     };
   } catch (error) {

@@ -9,6 +9,7 @@ const imoveis = {
     try {
       const imoveis = await ImovelDb.findAll({
         attributes: [
+          "id",
           "titulo",
           "endereco_id",
           "descricao",
