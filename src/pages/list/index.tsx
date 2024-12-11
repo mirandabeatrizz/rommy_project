@@ -9,12 +9,18 @@ interface ListProps {
   tiposDeImoveis: string[];
   cidades: string[];
   bairros: string[];
+  dataImoveis: any[];
 }
 
-export default function List({ tiposDeImoveis, cidades, bairros }: ListProps) {
+export default function List({
+  tiposDeImoveis,
+  cidades,
+  bairros,
+  dataImoveis,
+}: ListProps) {
   return (
     <div className="bg-white h-screen w-screen flex flex-col items-center gap-10">
-      <Menu/>
+      <Menu />
       <div className="flex items-center mt-[5vh]">
         <h1 className=" text-[#eb6d6d] text-3xl font-semibold">
           OPORTUNIDADES ENCONTRADAS
@@ -51,15 +57,14 @@ export default function List({ tiposDeImoveis, cidades, bairros }: ListProps) {
         </div>
       </form>
       <div className="grid grid-cols-4 w-[70%] gap-5">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {dataImoveis.map((data) => (
+          <Card
+            titulo={data.titulo}
+            cidade={cidades[data.endereco_id - 1]}
+            bairro={bairros[data.endereco_id - 1]}
+            aluguel={data.aluguel}
+          />
+        ))}
       </div>
     </div>
   );
@@ -90,11 +95,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
       (item: { nome: string }) => item.nome
     );
 
+    const responseImoveis = await fetch("http://localhost:3000/api/imoveis");
+    let dataImoveis = await responseImoveis.json();
+    dataImoveis = dataImoveis.list;
+
     return {
       props: {
         cidades,
         bairros,
         tiposDeImoveis,
+        dataImoveis,
       },
     };
   } catch (error) {
@@ -104,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         cidades: [],
         bairros: [],
         tiposDeImoveis: [],
+        dataImoveis: [],
       },
     };
   }
