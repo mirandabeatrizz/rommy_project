@@ -16,7 +16,7 @@ export default function Home({ tiposDeImoveis, cidades, bairros }: HomeProps) {
     <div className="h-screen w-screen flex justify-center">
       <BackgroudImage />
       <Menu />
-      <form className="flex absolute mt-[25%] w-1/2 flex-col gap-12" >
+      <form className="flex absolute mt-[25%] w-[70%] flex-col gap-12">
         <div className="w-full flex justify-between">
           <SelectHome
             defaultValue={""}
