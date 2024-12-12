@@ -87,19 +87,53 @@ export default function ImovelPage({
           </div> */}
 
           {/* Informações do imóvel */}
-          <div className="w-full md:w-[60%] bg-white p-6 rounded-lg shadow-lg mb-6 border-[1px]">
+          <div className="flex flex-col gap-6 w-full md:w-[70%] bg-white p-6 rounded-lg shadow-lg mb-6 border-[1px]">
             <h2 className="text-lg font-semibold mb-2">
-              Apartamento 2 quartos
+              TITULO DO IMOVEL
             </h2>
             <p className="text-sm text-gray-700 mb-4">
-              Localizado no bairro Jardim Américo, perto de supermercados,
-              escolas e posto de saúde!
+              tipo imovel, DESCRIÇÃO
             </p>
 
+            <div className="grid grid-cols-3">
+              <div className="flex gap-3">
+              iconQuartos <p>qtd_quartos</p>
+              </div>
+
+              <div className="flex gap-3">
+              iconBanheiro <p>qtd_banheiros</p>
+              </div>
+
+              <div className="flex gap-3">
+              iconGaragem <p>vagas</p>
+              </div>
+
+              <div className="flex gap-3">
+              IconArea <p>condominio</p>
+              </div>
+
+              <div className="flex gap-3">
+              iconPessoas <p> ocupacao_max</p>
+              </div>
+            </div>
+
+          <div className="grid grid-cols-3">
             <div className="mb-4">
-              <h3 className="font-semibold mb-1 text-sm">Valor:</h3>
+              <h3 className="font-semibold mb-1 text-sm">aluguel:</h3>
               <p className="text-lg text-[#1f4d78]">R$ 2.500,00</p>
             </div>
+
+            <div className="mb-4">
+              <h3 className="font-semibold mb-1 text-sm">condominio:</h3>
+              <p className="text-lg text-[#1f4d78]">R$ 2.500,00</p>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="font-semibold mb-1 text-sm">Valor total:</h3>
+              <p className="text-lg text-[#1f4d78]">R$ 2.500,00</p>
+            </div>
+          </div>
+            
 
             <div className="mb-4">
               <h3 className="font-semibold mb-1 text-sm">Endereço:</h3>
@@ -113,6 +147,10 @@ export default function ImovelPage({
           <button className="w-[60%] md:w-[40%] py-3 bg-[#eb6d6d] hover:bg-[#0e3a54] text-white text-lg rounded-lg transition duration-300">
             Registrar interesse
           </button>
+
+          <div>
+            LISTAGEM DE INTERESSES RELACIONADOS AO IMÒVEL
+          </div>
         </div>
       </div>
     </div>

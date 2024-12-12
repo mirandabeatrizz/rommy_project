@@ -57,7 +57,7 @@ export default function List({
         </div>
       </form>
       <div className="grid grid-cols-4 w-[70%] gap-5">
-        {dataImoveis.map((data) => (
+        {/* {dataImoveis.map((data) => (
           <Card
             key={data.id}
             id={data.id}
@@ -66,7 +66,15 @@ export default function List({
             bairro={bairros[data.endereco_id - 1]}
             aluguel={data.aluguel}
           />
-        ))}
+        ))} */}
+       <Card
+            key={1}
+            id={1}
+            titulo={"AAAAAAAAAA"}
+            cidade={"CHapecó"}
+            bairro={"Jardim Itália"}
+            aluguel={100000}
+          />
       </div>
     </div>
   );
