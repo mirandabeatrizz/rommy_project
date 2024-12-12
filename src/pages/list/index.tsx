@@ -67,6 +67,14 @@ export default function List({
             aluguel={data.aluguel}
           />
         ))}
+        {/* <Card
+            key={1}
+            id={1}
+            titulo={"AAAAAAAAAA"}
+            cidade={"CHapecó"}
+            bairro={"Jardim Itália"}
+            aluguel={100000}
+          /> */}
       </div>
     </div>
   );

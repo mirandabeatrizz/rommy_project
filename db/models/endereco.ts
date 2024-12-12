@@ -10,16 +10,15 @@ export class Endereco extends Model {
   declare cep: string;
 
   static associate(): void {
-    console.log("associando modelo endereco")
+    console.log("associando modelo endereco");
     Endereco.hasMany(Imovel);
-}
-
+  }
 }
 
 export function initEndereco(sequelize: Sequelize): void {
   Endereco.init(
     {
-      idendereco: {
+      id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,

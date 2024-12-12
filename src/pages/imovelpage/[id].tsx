@@ -2,6 +2,13 @@ import Menu from "@/components/menu/menu";
 import { GetServerSideProps } from "next";
 // import { useState } from "react";
 import { useRouter } from "next/router";
+import carIcon from "../../../public/images/icons/carIcon.svg";
+import bedroomIcon from "../../../public/images/icons/bedroomIcon.svg";
+import showerIcon from "../../../public/images/icons/showerIcon.svg";
+import maxOcupationIcon from "../../../public/images/icons/peopleIcon.svg";
+import areaIcon from "../../../public/images/icons/squareMetersIcon.svg";
+import CreateInteresse from "@/components/modais/createInteresse";
+import { useState } from "react";
 
 interface ImovelPageProps {
   dataImovel: {
@@ -55,13 +62,15 @@ export default function ImovelPage({
   //   setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   // };
 
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="w-screen bg-white min-h-[100vh]">
       <div className="imovel-page-container">
         <Menu />
-        <div className="flex flex-col items-center justify-center p-4">
-          <h1 className="text-[#0A2E4D] font-bold text-2xl mb-6 mt-[2vh]">
-            Detalhes do Imóvel {}
+        <div className="flex flex-col items-center justify-center p-4 text-black">
+          <h1 className="text-[#0A2E4D] font-bold text-xl mb-6 mt-[2vh]">
+            Detalhes do Imóvel
           </h1>
 
           {/* <div className="w-full md:w-[60%] h-[300px] bg-gray-200 rounded-lg overflow-hidden relative mb-6">
@@ -86,33 +95,91 @@ export default function ImovelPage({
             </button>
           </div> */}
 
-          {/* Informações do imóvel */}
-          <div className="w-full md:w-[60%] bg-white p-6 rounded-lg shadow-lg mb-6 border-[1px]">
-            <h2 className="text-lg font-semibold mb-2">
-              Apartamento 2 quartos
-            </h2>
-            <p className="text-sm text-gray-700 mb-4">
-              Localizado no bairro Jardim Américo, perto de supermercados,
-              escolas e posto de saúde!
-            </p>
-
-            <div className="mb-4">
-              <h3 className="font-semibold mb-1 text-sm">Valor:</h3>
-              <p className="text-lg text-[#1f4d78]">R$ 2.500,00</p>
+          <div className="flex flex-col gap-9 w-full md:w-[60%] bg-white p-8 rounded-lg shadow-lg mb-6 border-[1px]">
+            <div className="flex flex-col gap-2.5">
+              <h2 className="text-xl font-semibold text-center">
+                {dataImovel.titulo}
+              </h2>
+              <p className="text-md">{dataImovel.descricao}</p>
             </div>
 
-            <div className="mb-4">
-              <h3 className="font-semibold mb-1 text-sm">Endereço:</h3>
-              <p className="text-sm text-gray-600">
-                Rua Humberto de Campos, Nº 148e
-              </p>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="flex gap-3 items-center">
+                <img src={bedroomIcon.src} alt="quantidade de quartos" />
+                <p>{dataImovel.qtd_quartos}</p>
+              </div>
+
+              <div className="flex gap-3 items-center">
+                <img src={showerIcon.src} alt="quantidade de banheiros" />
+                <p>{dataImovel.qtd_banheiros}</p>
+              </div>
+
+              <div className="flex gap-3 items-center">
+                <img src={carIcon.src} alt="quantidade de vagas de garagem" />
+                <p>{dataImovel.vagas}</p>
+              </div>
+
+              <div className="flex gap-3 items-center">
+                <img src={areaIcon.src} alt="tamanho do imovel" />
+                <p>{dataImovel.condominio}</p>
+              </div>
+
+              <div className="flex gap-3 items-center">
+                <img src={maxOcupationIcon.src} alt="ocupação maxima" />
+                <p>{dataImovel.ocupacao_max}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3">
+              <div className="">
+                <h3 className="font-semibold mb-1 text-sm">aluguel:</h3>
+                <p className="text-lg text-[#1f4d78]">
+                  R$ {dataImovel.aluguel.toFixed(2).replace(".", ",")}
+                </p>
+              </div>
+
+              <div className="">
+                <h3 className="font-semibold mb-1 text-sm">condominio:</h3>
+                <p className="text-lg text-[#1f4d78]">
+                  R$ {dataImovel.condominio.toFixed(2).replace(".", ",")}
+                </p>
+              </div>
+
+              <div className="">
+                <h3 className="font-semibold mb-1 text-xl">Valor total:</h3>
+                <p className="text-lg text-[#1f4d78]">
+                  R${" "}
+                  {(dataImovel.aluguel + dataImovel.condominio)
+                    .toFixed(2)
+                    .replace(".", ",")}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-10 items-center">
+              <div className="">
+                <h3 className="font-semibold mb-1 text-sm">Endereço:</h3>
+                <p className="text-sm text-gray-600">
+                  {dataEndereco.cidade}, {dataEndereco.bairro},{" "}
+                  {dataEndereco.rua} - CEP: {dataEndereco.cep}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowModal(true)}
+                className="h-14 w-[90%] py-3 bg-[#eb6d6d] hover:bg-[#0e3a54] text-white text-lg rounded-lg transition duration-300"
+              >
+                Registrar interesse
+              </button>
             </div>
           </div>
-
-          {/* Botão ajustado com as cores especificas */}
-          <button className="w-[60%] md:w-[40%] py-3 bg-[#eb6d6d] hover:bg-[#0e3a54] text-white text-lg rounded-lg transition duration-300">
-            Registrar interesse
-          </button>
+          <CreateInteresse
+            showModal={showModal}
+            setShowModal={setShowModal}
+            idImovel={dataImovel.id}
+          />
+          <div>
+            <h2 className="text-[#1f4d78] text-2xl">Interesses Relacionados</h2>
+          </div>
         </div>
       </div>
     </div>

@@ -5,10 +5,13 @@ import { Imovel as ImovelDb } from "../models/imovel";
 const enderecos = {
   async list() {
     try {
-      console.log("Model Endereco:", EnderecoDb === undefined ? "Não inicializado" : "Inicializado");
+      console.log(
+        "Model Endereco:",
+        EnderecoDb === undefined ? "Não inicializado" : "Inicializado"
+      );
 
       const enderecos = await EnderecoDb.findAll({
-        attributes: ['rua', 'bairro', 'cidade', 'estado', 'cep']
+        attributes: ["rua", "bairro", "cidade", "estado", "cep"],
       })
         .then((response: EnderecoDb[]) => {
           const data = response.map((record) => {
@@ -20,14 +23,14 @@ const enderecos = {
 
       if (enderecos) {
         return { list: enderecos };
-      }else{
-        throw new Error('Não foi possivel listar o endereco.'); 
+      } else {
+        throw new Error("Não foi possivel listar o endereco.");
       }
     } catch (error: any) {
       const newError = new Error(
         `Method: list; \n file: enderecoController.ts:: ${error}`
       );
-     console.log(newError.message, { critical: false, track: newError.stack });
+      console.log(newError.message, { critical: false, track: newError.stack });
       return { error: true, message: newError.message };
     }
   },
