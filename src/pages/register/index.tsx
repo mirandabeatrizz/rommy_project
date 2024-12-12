@@ -3,7 +3,7 @@ import axios from 'axios';
 import BackgroudImage from '@/components/bgImage';
 import Menu from '@/components/menu/menu';
 import logo from '../../../public/images/logo.svg';
-import closedEye from '../../../public/images/closedEyeIcon.svg';
+import closedEye from '../../../public/images/icons/closedEyeIcon.svg';
 
 function initialState() {
     return {

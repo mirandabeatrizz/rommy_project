@@ -13,13 +13,13 @@ export default function Menu() {
         </Link>
       </div>
       <div className="mr-10 flex gap-8 font text-[#eb6d6d] font-bold text-lg">
-        <Link href={"/"}>Explorar Imóveis</Link>
+        <Link href={"/list"}>Explorar Imóveis</Link>
 
         {/* Entrar só aparece quando não está na página de login */}
 
-        {pathname !== "/auth" && (
+        {pathname !== "/login" && (
           <>
-            <Link href="./auth">Entrar</Link>
+            <Link href="./login">Entrar</Link>
           </>
         )}
       </div>

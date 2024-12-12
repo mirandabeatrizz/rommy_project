@@ -3,7 +3,7 @@ import axios from 'axios';
 import BackgroudImage from '@/components/bgImage';
 import Menu from '@/components/menu/menu';
 import logo from '../../../public/images/logo.svg';
-import closedEye from '../../../public/images/closedEyeIcon.svg';
+import closedEye from "../../../public/images/icons/closedEyeIcon.svg"
 
 
 export default function LoginPage() {
@@ -90,6 +90,14 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
+          <div className="flex flex-col md:flex-row justify-between text-sm md:text-base text-[#00000073]">
+              <a href="#" className="hover:text-black">
+                Esqueceu a senha
+              </a>
+              <a href="/register" className="hover:text-black">
+                Ainda não possuo cadastro
+              </a>
+            </div>
 
           <button
             type="submit"
