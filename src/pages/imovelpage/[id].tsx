@@ -144,12 +144,12 @@ export default function ImovelPage({
           </div>
 
           {/* Botão ajustado com as cores especificas */}
-          <button className="w-[60%] md:w-[40%] py-3 bg-[#eb6d6d] hover:bg-[#0e3a54] text-white text-lg rounded-lg transition duration-300">
+          <button className="mb-[3vh] w-[60%] md:w-[40%] py-3 bg-[#eb6d6d] hover:bg-[#0e3a54] text-white text-lg rounded-lg transition duration-300">
             Registrar interesse
           </button>
 
           <div>
-            LISTAGEM DE INTERESSES RELACIONADOS AO IMÒVEL
+            <h2 className="text-[#1f4d78] text-2xl">Interesses Relacionados</h2>
           </div>
         </div>
       </div>
