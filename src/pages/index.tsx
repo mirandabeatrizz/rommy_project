@@ -1,4 +1,4 @@
-import searchIcon from "../../public/images/searchIcon.svg";
+import searchIcon from "../../public/images/icons/searchIcon.svg";
 import BackgroudImage from "@/components/bgImage";
 import Menu from "@/components/menu/menu";
 import SelectHome from "@/components/selectButton";

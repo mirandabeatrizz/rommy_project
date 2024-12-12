@@ -1,5 +1,11 @@
-import { Sequelize, DataTypes, Model, NonAttribute, ForeignKey } from "sequelize";
-import { Endereco } from "./endereco"; 
+import {
+  Sequelize,
+  DataTypes,
+  Model,
+  NonAttribute,
+  ForeignKey,
+} from "sequelize";
+import { Endereco } from "./endereco";
 import { TipoImovel } from "./tipoImovel";
 import { Usuario } from "./usuario";
 import { UsuarioImovel } from "./usuarioImovel";
@@ -16,17 +22,16 @@ export class Imovel extends Model {
   declare condominio: number;
   declare ocupado: boolean;
   declare ocupacao_max: number;
-  declare endereco_id: ForeignKey<Endereco['id']>;
-  declare tipoimovel_id: ForeignKey<TipoImovel['id']>;
+  declare endereco_id: ForeignKey<Endereco["id"]>;
+  declare tipoimovel_id: ForeignKey<TipoImovel["id"]>;
 
-  declare usuario_id:  NonAttribute <Usuario>
+  declare usuario_id: NonAttribute<Usuario>;
 
   static associate(): void {
-    console.log("associando modelo imovel")
-    Imovel.belongsToMany(Usuario, {through: Usuario});
+    console.log("associando modelo imovel");
+    Imovel.belongsToMany(Usuario, { through: Usuario });
     Imovel.belongsTo(Endereco);
     Imovel.belongsTo(TipoImovel);
-  
   }
 }
 
@@ -77,7 +82,7 @@ export function initImovel(sequelize: Sequelize): void {
       ocupacao_max: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,

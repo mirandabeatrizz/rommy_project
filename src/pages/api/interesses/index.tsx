@@ -1,35 +1,30 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import interesseDb from "../../../../db/controllers/interesseController";
-import sequelize from 'sequelize';
-import db from '../../../../db/models';
+import { NextApiRequest, NextApiResponse } from "next";
+import { Interesse } from "../../../../db/models/interesse";
+import db from "../../../../db/models";
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Método não permitido" });
+  }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { valor, qtd_moradores, usuario_id, imovel_id } = req.body;
+
   try {
-    await db.sequelize.authenticate();  // Testando a conexão
-    console.log("Banco de dados conectado");
-    switch (req.method) {
-      case 'GET':
-        try {
-          const interesses = await interesseDb.list();
-          res.status(200).json(interesses);
-        } catch (error) {
-          return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })
-        }
-      case 'POST':
-        try {
-          let data = req.body;
-          const new_user = await interesseDb.create(data);
-          return res.status(200).json(new_user)
+    await db.sequelize.authenticate(); // Autenticação com o banco de dados
 
-        } catch (error) {
-          return res.status(400).json({ error: true, message: 'Não foi posssível processar a requisição!' })
-        }
+    const interesse = await Interesse.create({
+      data_criacao: new Date(),
+      valor: valor,
+      qtd_moradores: qtd_moradores,
+      usuario_id: usuario_id,
+      imovel_id: imovel_id,
+    });
 
-      default:
-        return res.status(405).json({ error: `Método ${req.method} não permitido.` });
-    }
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ error: error.message || 'Erro interno do servidor.' });
+    return res.status(201).json(interesse);
+  } catch (error) {
+    console.error("Erro ao criar interesse:", error);
+    return res.status(500).json({ error: "Erro ao criar interesse" });
   }
 }

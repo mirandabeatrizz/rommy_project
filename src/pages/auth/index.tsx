@@ -1,7 +1,7 @@
 import BackgroudImage from "@/components/bgImage";
 import Menu from "@/components/menu/menu";
 import logo from "../../../public/images/logo.svg";
-import closedEye from "../../../public/images/closedEyeIcon.svg";
+import closedEye from "../../../public/images/icons/closedEyeIcon.svg";
 
 export default function LoginPage() {
   return (
@@ -19,12 +19,10 @@ export default function LoginPage() {
         <form className="bg-white w-[90%] max-w-md md:max-w-lg p-8 md:p-10 rounded-2xl gap-6 shadow-lg">
           {/* Conteúdo do Formulário */}
           <div className="text-center text-black">
-            <img
-              className="h-16 mb-4 mx-auto"
-              src={logo.src}
-              alt="logo"
-            />
-            <p className="font-semibold text-lg md:text-2xl">Bem-vindo de volta!</p>
+            <img className="h-16 mb-4 mx-auto" src={logo.src} alt="logo" />
+            <p className="font-semibold text-lg md:text-2xl">
+              Bem-vindo de volta!
+            </p>
             <p className="text-sm md:text-base">Acesse sua conta</p>
           </div>
 
