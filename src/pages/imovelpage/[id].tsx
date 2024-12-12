@@ -1,9 +1,45 @@
 import Menu from "@/components/menu/menu";
 import { GetServerSideProps } from "next";
 // import { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function ImovelPage() {
-  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+interface ImovelPageProps {
+  dataImovel: {
+    id: number;
+    endereco_id: string;
+    tipoImovel_id: string;
+    titulo: string;
+    descricao: string;
+    qtd_quartos: number;
+    qtd_banheiros: number;
+    vagas: number;
+    ocupado: boolean;
+    aluguel: number;
+    condominio: number;
+    tamanho: number;
+    ocupacao_max: number;
+  };
+  dataEndereco: {
+    id: number;
+    rua: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+    cep: string;
+  };
+  dataTipo: {
+    id: number;
+    nome: string;
+  };
+}
+
+export default function ImovelPage({
+  dataImovel,
+  dataEndereco,
+  dataTipo,
+}: ImovelPageProps) {
+  // const router = useRouter();
+  // const { id } = router.query;
 
   // const images = [
   //   "https://via.placeholder.com/600x400.png?text=Imagem+1",
@@ -25,7 +61,7 @@ export default function ImovelPage() {
         <Menu />
         <div className="flex flex-col items-center justify-center p-4">
           <h1 className="text-[#0A2E4D] font-bold text-2xl mb-6 mt-[2vh]">
-            Detalhes do Imóvel
+            Detalhes do Imóvel {}
           </h1>
 
           {/* <div className="w-full md:w-[60%] h-[300px] bg-gray-200 rounded-lg overflow-hidden relative mb-6">
@@ -83,39 +119,46 @@ export default function ImovelPage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    // Consultando endereços
-    const responseEnderecos = await fetch(
-      "http://localhost:3000/api/enderecos"
+    const { id } = context.params || {};
+
+    if (!id || typeof id !== "string") {
+      throw new Error("Invalid id");
+    }
+
+    //Consultado imóvel do id
+    const responseImovel = await fetch(
+      `http://localhost:3000/api/imoveis/${id}`
     );
-    const dataEnderecos = await responseEnderecos.json();
+    const dataImovel = await responseImovel.json();
 
-    // Consultando os tipos de imóveis
-    const responseTipos = await fetch("http://localhost:3000/api/tipos");
-    const dataTipos = await responseTipos.json();
-
-    const tiposDeImoveis = dataTipos.list.map(
-      (item: { nome: string }) => item.nome
+    // Consultando endereço do imóvel
+    const responseEndereco = await fetch(
+      `http://localhost:3000/api/enderecos/${dataImovel.endereco_id}`
     );
+    const dataEndereco = await responseEndereco.json();
 
-    const responseImoveis = await fetch("http://localhost:3000/api/imoveis");
-    const dataImoveis = await responseImoveis.json();
+    //Consultando tipo do imóveil
+    const responseTipos = await fetch(
+      `http://localhost:3000/api/tipos/${dataImovel.tipoImovel_id}`
+    );
+    const dataTipo = await responseTipos.json();
 
     return {
       props: {
-        dataEnderecos: dataEnderecos.list,
-        tiposDeImoveis,
-        dataImoveis: dataImoveis.list,
+        dataEndereco,
+        dataTipo,
+        dataImovel,
       },
     };
   } catch (error) {
     console.error("Erro ao buscar os dados:", error);
     return {
       props: {
-        dataEnderecos: [],
-        tiposDeImoveis: [],
-        dataImoveis: [],
+        dataEndereco: null,
+        dataTipo: null,
+        dataImovel: null,
       },
     };
   }

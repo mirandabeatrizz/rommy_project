@@ -24,7 +24,7 @@ export default function Card({
       </div>
       <div className="w-full flex justify-between items-center">
         <p className="italic">R${aluguel.toFixed(2).replace(".", ",")}</p>
-        <Link href={`/imovelpage?${id}`}>
+        <Link href={`/imovelpage/${id}`}>
           <button className="bg-[#0A2E4D] rounded-md text-xl w-8 h-8 font-semibold text-white flex justify-center items-center hover:bg-[#1c65a4] transition duration-300">
             +
           </button>

@@ -3,6 +3,7 @@ import { Endereco as EnderecoDb } from "../models/endereco";
 import { Imovel as ImovelDb } from "../models/imovel";
 import { Usuario as UsuarioDb } from "../models/usuario";
 import { UsuarioImovel as UsuarioImovelDb } from "../models/usuarioImovel";
+import { TipoImovel } from "../models/tipoImovel";
 
 const imoveis = {
   async list() {
@@ -46,6 +47,22 @@ const imoveis = {
   async show(id: number) {
     try {
       const imovel = await ImovelDb.findOne({
+        attributes: [
+          "id",
+          "endereco_id",
+          "tipoImovel_id",
+          "titulo",
+          "endereco_id",
+          "descricao",
+          "qtd_quartos",
+          "qtd_banheiros",
+          "vagas",
+          "ocupado",
+          "aluguel",
+          "condominio",
+          "tamanho",
+          "ocupacao_max",
+        ],
         where: { id: id },
       });
       if (!imovel) {
