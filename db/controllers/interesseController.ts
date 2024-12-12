@@ -33,7 +33,7 @@ const interesse = {
 
     async create(data: InteresseDb) {
         try {
-            const { valor, qtd_moradores, imovel_id } = data
+            const { usuario_id, valor, qtd_moradores, imovel_id } = data
             if (data) {
 
                 //procura o imovel
@@ -44,6 +44,7 @@ const interesse = {
                 if (imovel) {
                     //adiciona na tabela de Interesse
                     const novo_interesse = await InteresseDb.create({
+                        usuario_id,
                         valor: valor,
                         qtd_moradores:qtd_moradores
                     }).then(async (interesse)=>{

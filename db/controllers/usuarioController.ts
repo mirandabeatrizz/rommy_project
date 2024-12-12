@@ -1,6 +1,11 @@
 
 import Models from "../models/index";
 import { Usuario as UsuarioDb } from "../models/usuario";
+import Criptografia, { hashMe } from '../../utils/cipherText'
+
+const pass_transport = Buffer.from(process.env.PASS_TRANSPORT ?? '0', 'hex')
+const pass_iv = Buffer.from(process.env.PASS_IV ?? '0', 'hex')
+const cipher = new Criptografia(pass_transport, pass_iv, 'aes-256-gcm');
 
 
 const usuarios = {
@@ -9,7 +14,7 @@ const usuarios = {
         try {
             const usuarios = await UsuarioDb.findAll({
                 attributes: ['nome', 'email', 'cpf', 'genero', 'data_nasc', 'celular', 'senha']
-              }).then((response: UsuarioDb[]) => {
+            }).then((response: UsuarioDb[]) => {
                 const data = response.map((record) => {
                     return record.toJSON()
                 })
@@ -26,6 +31,34 @@ const usuarios = {
         }
     },
 
+    async findByEmail(email: string) {
+        try {
+            const usuario = await UsuarioDb.findOne({ where: { email } });
+            return usuario ? usuario.toJSON() : null;
+        } catch (error) {
+            console.error('Erro ao buscar usuário por email:', error);
+            throw error;
+        }
+    },
+
+    async login(email: string, senha: string) {
+        try {
+            //cria o hash da senha submetida
+            const hashPassword = hashMe(cipher.criptografa(senha));
+
+            const usuario = await UsuarioDb.findOne({
+                where: {
+                    email: email,
+                    senha: hashPassword
+                }
+            });
+            return usuario ? usuario : null;
+        } catch (error) {
+            console.error('Erro ao buscar usuário por email:', error);
+            throw error;
+        }
+    },
+
     async show(id: number) {
         try {
 
@@ -33,7 +66,7 @@ const usuarios = {
                 where: { id: id }
             })
             if (!usuario) {
-                throw new Error('Usuário não encontrado.'); 
+                throw new Error('Usuário não encontrado.');
             }
             return usuario;
 
@@ -44,10 +77,32 @@ const usuarios = {
         }
     },
 
+    async showByEmail(email: string) {
+        try {
+            const usuario = await UsuarioDb.findOne({
+                where: { email: email },
+            });
+
+            if (!usuario) {
+                throw new Error('Usuário não encontrado.');
+            }
+
+            return usuario;
+        } catch (error: any) {
+            const newError = new Error(`Method: showByEmail; \n file: usuarioController.ts:: ${error}`);
+            console.log(newError.message, { critical: false, track: newError.stack });
+            return null; // Retornar null em caso de erro
+        }
+    },
+
     async create(data: UsuarioDb) {
 
         try {
             if (data) {
+
+                //cria o hash da senha submetida
+                const hashPassword = hashMe(cipher.criptografa(data.senha));
+
                 const usuario = await UsuarioDb.create({
                     nome: data.nome,
                     email: data.email,
@@ -55,7 +110,7 @@ const usuarios = {
                     celular: data.celular,
                     data_nasc: data.data_nasc,
                     genero: data.genero,
-                    senha: data.senha
+                    senha: hashPassword
                 });
                 return usuario
             }
@@ -76,8 +131,8 @@ const usuarios = {
                     }
                 });
                 if (!usuario) {
-                    throw new Error('Usuário não encontrado.'); 
-                } 
+                    throw new Error('Usuário não encontrado.');
+                }
                 return usuario.update(data);
             }
 
@@ -90,15 +145,15 @@ const usuarios = {
 
     async delete(id: number) {
         try {
-            if(id){
+            if (id) {
                 const usuario = await UsuarioDb.findByPk(id);
-                if (!usuario){
+                if (!usuario) {
                     throw new Error('Usuário não encontrado.');
-                } 
+                }
                 await usuario.destroy();
                 return { message: 'Usuário deletado com sucesso.' };
             }
-            
+
         } catch (error: any) {
             const newError = new Error(`Method: delete; \n file: usuarioController.ts:: ${error}`);
             console.log(newError.message, { critical: false, track: newError.stack })
